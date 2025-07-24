@@ -6,11 +6,13 @@
     "scripts": {
         "serve": "vue-cli-service serve",
         "build": "vue-cli-service build",
-        "lint": "vue-cli-service lint"
+        "lint": "vue-cli-service lint",
+        "deploy": "gh-pages -d dist"
     },
     "dependencies": {
         "axios": "^1.10.0",
         "chart.js": "^4.3.0",
+        "gh-pages": "^6.3.0",
         "node-telegram-bot-api": "^0.66.0",
         "vue": "^3.3.4",
         "vue-chartjs": "^5.2.0",
