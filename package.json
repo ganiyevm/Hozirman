@@ -1,0 +1,23 @@
+{
+    "name": "hitech-lab-dashboard",
+    "version": "1.0.0",
+    "private": true,
+    "main": "index.js",
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build",
+        "lint": "vue-cli-service lint"
+    },
+    "dependencies": {
+        "axios": "^1.10.0",
+        "chart.js": "^4.3.0",
+        "node-telegram-bot-api": "^0.66.0",
+        "vue": "^3.3.4",
+        "vue-chartjs": "^5.2.0",
+        "vue-router": "^4.2.4"
+    },
+    "devDependencies": {
+        "@vue/cli-service": "^5.0.8",
+        "@vue/compiler-sfc": "^3.3.4"
+    }
+}
