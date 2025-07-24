@@ -4,7 +4,7 @@ const token = '8090349288:AAEIz18mH01Cd8pLmuoGWAPRpyFrf2kjF5g';
 
 const bot = new TelegramBot(token, { polling: true });
 
-const webAppUrl = 'https://b7b062806d01.ngrok-free.app';
+const webAppUrl = 'https://902b7189100b.ngrok-free.app';
 
 console.log('🤖 Telegram bot ishga tushdi...');
 
@@ -21,7 +21,7 @@ bot.onText(/\/start/, (msg) => {
     };
     
     const welcomeMessage = `
-Hi Tech Lab davomat botiga xush kelibsiz. 🤖
+Botga xush kelibsiz. 🤖
 
 👋 Salom ${msg.from.first_name}!
 

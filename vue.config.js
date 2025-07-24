@@ -4,7 +4,7 @@ const path = require('path')
 module.exports = defineConfig({
   transpileDependencies: true,
 
-  publicPath: process.env.NODE_ENV === 'production' ? '/hitech-lab-dashboard/' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/Hozirman/' : '/',
 
   devServer: {
     port: 5500,
