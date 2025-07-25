@@ -4,7 +4,7 @@ import Dashboard from '../views/Dashboard.vue'
 const routes = [
   {
     path: '/',
-    name: 'Dashboard',
+    name: 'Hozirman',
     component: Dashboard
   }
 ]
