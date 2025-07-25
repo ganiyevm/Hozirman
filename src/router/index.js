@@ -10,7 +10,8 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  // GitHub Pages uchun base URL - vue.config.js dagi publicPath bilan mos bo'lishi kerak
+  history: createWebHistory(process.env.BASE_URL),
   routes
 })
 
