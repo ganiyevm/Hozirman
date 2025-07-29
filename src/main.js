@@ -6,6 +6,9 @@ import telegramApp from './telegram-web-app'
 
 const app = createApp(App)
 
+app.config.errorHandler = (err, vm, info) => {
+    console.error('Global error:', err, info)
+}
 
 function loadTelegramWebApp() {
     return new Promise((resolve, reject) => {

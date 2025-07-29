@@ -80,35 +80,45 @@
 // })
 
 
+// vue.config.js - CORS muammosini hal qilish uchun
 const { defineConfig } = require('@vue/cli-service')
-const path = require('path')
 
 module.exports = defineConfig({
   transpileDependencies: true,
-
   publicPath: process.env.NODE_ENV === 'production' ? '/Hozirman/' : '/',
 
   devServer: {
     port: 5500,
     host: '127.0.0.1',
-    https: false, 
+    https: false,
     open: true,
     allowedHosts: 'all',
-    client: {
-      overlay: {
-        warnings: false,
-        errors: true
-      }
-    },
+    
+    // CORS muammosini hal qilish uchun proxy sozlamalari
     proxy: {
       '/api': {
-        target: process.env.VUE_APP_API_BASE_URL || 'https://hozirman.uz',
+        target: 'https://hozirman.uz',
         changeOrigin: true,
-        secure: false,
-        logLevel: 'debug'
+        secure: true,
+        logLevel: 'debug',
+        pathRewrite: {
+          '^/api': '/api' // API yo'lini o'zgartirmaslik
+        },
+        onProxyReq: function(proxyReq, req, res) {
+          // So'rov sarlavhalarini sozlash
+          proxyReq.setHeader('Origin', 'https://hozirman.uz');
+          proxyReq.setHeader('Referer', 'https://hozirman.uz');
+        },
+        onProxyRes: function(proxyRes, req, res) {
+          // Javob sarlavhalarini sozlash
+          proxyRes.headers['Access-Control-Allow-Origin'] = '*';
+          proxyRes.headers['Access-Control-Allow-Methods'] = 'GET,PUT,POST,DELETE,PATCH,OPTIONS';
+          proxyRes.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, Content-Length, X-Requested-With';
+        }
       }
     },
-    // CORS headers for API requests
+
+    // Umumiy CORS sozlamalari
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
@@ -116,10 +126,11 @@ module.exports = defineConfig({
     }
   },
 
+  // Boshqa sozlamalar...
   configureWebpack: {
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, 'src')
+        '@': require('path').resolve(__dirname, 'src')
       }
     }
   },
@@ -136,14 +147,6 @@ module.exports = defineConfig({
         }
       }
     })
-
-    config.plugin('html').tap(args => {
-      args[0].meta = {
-        viewport: 'width=device-width,initial-scale=1,user-scalable=no',
-        'theme-color': '#6366f1'
-      }
-      return args
-    })
   },
 
   css: {
@@ -157,14 +160,5 @@ module.exports = defineConfig({
     }
   },
 
-  productionSourceMap: false,
-
-  pwa: {
-    name: 'Hi Tech Lab Dashboard',
-    themeColor: '#6366f1',
-    msTileColor: '#6366f1',
-    manifestOptions: {
-      background_color: '#6366f1'
-    }
-  }
+  productionSourceMap: false
 })
