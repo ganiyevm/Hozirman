@@ -102,7 +102,7 @@ module.exports = defineConfig({
     },
     proxy: {
       '/api': {
-        target: 'http://217.30.170.22:7000',
+        target: process.env.VUE_APP_API_BASE_URL || 'https://hozirman.uz',
         changeOrigin: true,
         secure: false,
         logLevel: 'debug'
