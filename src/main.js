@@ -56,27 +56,65 @@ function loadTelegramWebApp() {
 
 
 
+// async function initApp() {
+//     try {
+//         console.log('Initializing application...');
+
+//         await loadTelegramWebApp()
+
+//         app.config.globalProperties.$telegram = telegramApp
+//         app.provide('telegram', telegramApp)
+
+//         console.log('Telegram Web App successfully integrated via telegramApp class');
+
+//     } catch (error) {
+//         console.warn('Running without Telegram Web App:', error.message);
+
+//         app.config.globalProperties.$telegram = telegramApp 
+//         app.provide('telegram', telegramApp)
+//     } finally {
+//         app.use(router).mount('#app');
+//         console.log('Vue application mounted');
+//     }
+// }
 async function initApp() {
     try {
-        console.log('Initializing application...');
+        await loadTelegramWebApp();
 
-        await loadTelegramWebApp()
+        if (!(window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe?.user)) {
+
+            document.body.innerHTML = `
+                <div style='color: #fff; background: #23272F; padding: 48px; text-align: center; font-size: 1.2rem;'>
+                    Iltimos, ushbu mini appni <b>faqat Telegram ilovasi orqali</b> oching!<br><br>
+                    <a 
+                        href="https://t.me/ganniyev" 
+                        target="_blank"
+                        style="color: #40b3ff; font-size: 1.2em; text-decoration: underline;"
+                    >Telegram botni ochish</a>
+                </div>
+            `;
+            return;
+        }
 
         app.config.globalProperties.$telegram = telegramApp
         app.provide('telegram', telegramApp)
-
-        console.log('Telegram Web App successfully integrated via telegramApp class');
-
     } catch (error) {
-        console.warn('Running without Telegram Web App:', error.message);
-
-        app.config.globalProperties.$telegram = telegramApp 
-        app.provide('telegram', telegramApp)
-    } finally {
-        app.use(router).mount('#app');
-        console.log('Vue application mounted');
+        document.body.innerHTML = `
+            <div style='color: #fff; background: #23272F; padding: 48px; text-align: center; font-size: 1.2rem;'>
+                Iltimos, ushbu mini appni <b>faqat Telegram ilovasi orqali</b> oching!<br><br>
+                <span style='color:#fa6060;'>${error.message}</span><br><br>
+                <a 
+                    href="https://t.me/YOUR_BOT_USERNAME" 
+                    target="_blank"
+                    style="color: #40b3ff; font-size: 1.2em; text-decoration: underline;"
+                >Telegram botni ochish</a>
+            </div>
+        `;
+        return;
     }
+    app.use(router).mount('#app');
 }
+
 
 
 initApp();
